@@ -29,3 +29,7 @@ source '/Users/kadowakiyu/google-cloud-sdk/completion.bash.inc'
 export PATH=$PATH:/Applications/adt-bundle-mac-x86_64/sdk/platform-tools/
 
 export DIYBOX_DATABASE_PASSWORD=qR8zF7um
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="/Users/gates1de/.sdkman"
+[[ -s "/Users/gates1de/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/gates1de/.sdkman/bin/sdkman-init.sh"

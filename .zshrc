@@ -1,4 +1,4 @@
-# 1行表示
+########################################
 # License : MIT
 # http://mollifier.mit-license.org/
 
@@ -7,18 +7,19 @@
 export LANG=ja_JP.UTF-8
 
 
-# 色を使用出来るようにする
-autoload -Uz colors
-colors
-
+########################################
 # vim 風キーバインドにする
 bindkey -v
 
+
+########################################
 # ヒストリの設定
 HISTFILE=~/.zsh_history
 HISTSIZE=1000000
 SAVEHIST=1000000
 
+
+########################################
 # プロンプト
 autoload -Uz colors; colors
 PROMPT="%(?.%{$fg[white]%}.%{$fg[cyan]%})%(?!(๑╹ڡ ╹๑%)!(´;ω ;%)) %B%~$%b%{${reset_color}%} "
@@ -26,6 +27,8 @@ PROMPT2="%{$fg[blue]%}%_>%{$reset_color%}%b "
 setopt correct
 SPROMPT="%{$fg[red]%}%{$suggest%}ʅ（´◔౪◔）ʃ? %B %r じゃないんすか? [n,y,a,e]:%{${reset_color}%}%b "
 
+
+########################################
 # 単語の区切り文字を指定する
 autoload -Uz select-word-style
 select-word-style default
@@ -33,6 +36,7 @@ select-word-style default
 # / も区切りと扱うので、^W でディレクトリ１つ分を削除できる
 zstyle ':zle:*' word-chars " /=;@:{},|"
 zstyle ':zle:*' word-style unspecified
+
 
 ########################################
 # 補完
@@ -106,11 +110,13 @@ setopt hist_reduce_blanks
 # 高機能なワイルドカード展開を使用する
 setopt extended_glob
 
+
 ########################################
 # キーバインド
 
 # ^R で履歴検索をするときに * でワイルドカードを使用出来るようにする
 bindkey '^R' history-incremental-pattern-search-backward
+
 
 ########################################
 # エイリアス
@@ -124,12 +130,19 @@ alias mv='mv -i'
 
 alias mkdir='mkdir -p'
 
+alias vim='/usr/local/bin/vim'
+
 # sudo の後のコマンドでエイリアスを有効にする
 alias sudo='sudo '
 
 # グローバルエイリアス
 alias -g L='| less'
 alias -g G='| grep'
+
+alias lumen='~/.composer/vendor/bin/lumen'
+
+# docker用エイリアス
+alias docmac='docker-machine'
 
 # C で標準出力をクリップボードにコピーする
 # mollifier delta blog : http://mollifier.hatenablog.com/entry/20100317/p1
@@ -144,7 +157,7 @@ elif which putclip >/dev/null 2>&1 ; then
 	alias -g C='| putclip'
 fi
 
-########################################
+
 # OS 別の設定
 case ${OSTYPE} in
 	darwin*)
@@ -158,30 +171,51 @@ case ${OSTYPE} in
 	;;
 esac
 
-# vim:set ft=zsh:
-export GOROOT=/usr/local/opt/go/libexec
-export GOPATH=$HOME/go
-export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
-export PATH="$PATH:$GOPATH/bin"
-
-export PATH="/usr/local/heroku/bin:$PATH"
-
-eval "$(rbenv init -)"
-export PATH=/usr/local/bin:$PATH
-export PATH=/usr/local/sbin:$PATH
-
-export PATH=$HOME/.npm/bin:$PATH
-export NODE_PATH=$HOME/.npm/libraries:$NODE_PATH
-export MANPATH=$HOME/.npm/man:$MANPATH
-
 if [[ -s ~/.nvm/nvm.sh ]];
 	then source ~/.nvm/nvm.sh
 fi
 
+
+########################################
+# パス設定
+export PATH=/usr/local/bin:$PATH
+export PATH=/usr/local/sbin:$PATH
+
+# hub command
 function git(){hub "$@"}
-export PATH="$PATH:/Applications/adt-bundle-mac-x86_64/sdk/platform-tools"
+
+# android
+export PATH="$PATH:Library/Android/sdk/platform-tools"
+
+# autoconf
+alias autoconf='/usr/local/Cellar/autoconf/2.69/bin/autoconf'
+
+# rbenv
+export RBENV_ROOT="$HOME/.rbenv"
 export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
-export PATH=/usr/local/share/python:$PATH
 
-alias autoconf='/usr/local/Cellar/autoconf/2.69/bin/autoconf'
+# pyenv
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+
+# dyld
+export DYLD_LIBRARY_PATH=/opt/intel/composer_xe_2015.3.187/compiler/lib
+
+# The next line updates PATH for the Google Cloud SDK.
+source '/Users/gates1de/google-cloud-sdk/path.zsh.inc'
+
+# gvm
+[[ -s "/Users/gates1de/.gvm/scripts/gvm" ]] && source "/Users/gates1de/.gvm/scripts/gvm"
+
+# node
+export PATH=$PATH:./node_modules/.bin
+
+# sdkman
+export SDKMAN_DIR="/Users/gates1de/.sdkman"
+[[ -s "/Users/gates1de/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/gates1de/.sdkman/bin/sdkman-init.sh"
+
+# golang
+export GOPATH=$HOME/go
+export PATH=$GOROOT/bin:$PATH

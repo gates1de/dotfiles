@@ -25,75 +25,74 @@ set tabstop=2
 set shiftwidth=2
 set softtabstop=2
 set autoindent
-filetype plugin indent on
+set expandtab
 
-let g:user_emmet_settings = {
-			\   'lang' : 'ja'
-			\ }
+filetype plugin indent on
 
 :let g:closetag_html_style=1
 :source ~/.vim/scripts/closetag.vim
 
 let s:vim_home=expand('~/.vim')
-if has('vim_starting')
-  let &runtimepath.=printf(',%s/bundle/neobundle.vim', s:vim_home)
+
+"dein Scripts-----------------------------
+if &compatible
+  set nocompatible               " Be iMproved
 endif
 
-call neobundle#begin(expand('~/.vim/bundle/'))
-NeoBundleFetch 'Shougo/neobundle.vim'
-call neobundle#end()
+" Required:
+set runtimepath+=/Users/gates1de/.vim/dein/./repos/github.com/Shougo/dein.vim
 
-NeoBundleFetch 'Shougo/neobundle.vim'
+" Required:
+if dein#load_state('/Users/gates1de/.vim/dein/.')
+  call dein#begin('/Users/gates1de/.vim/dein/.')
 
-set rtp^=$GOROOT/misc/vim
-set rtp^=$GOPATH/src/github.com/nsf/gocode/vim
+  " Let dein manage dein
+  " Required:
+  call dein#add('/Users/gates1de/.vim/dein/./repos/github.com/Shougo/dein.vim')
 
-set nocompatible               " be iMproved
-filetype off
-if has('vim_starting')
-	set runtimepath+=~/.vim/bundle/neobundle.vim
-	"call neobundle#rc(expand('~/.vim/bundle/'))
-	call neobundle#begin(expand('~/.vim/bundle/'))
-	NeoBundleFetch 'Shougo/neobundle.vim'
-	call neobundle#end()
+  " Add or remove your plugins here:
+  call dein#add('Shougo/neosnippet.vim')
+  call dein#add('Shougo/neosnippet-snippets')
+  call dein#add('Shougo/vimproc')
+  call dein#add('Shougo/unite.vim')
+  call dein#add('Shougo/neocomplcache')
+  call dein#add('Shougo/vimfiler')
+  call dein#add('Shougo/unite-outline')
+  call dein#add('majutsushi/tagbar')
+  call dein#add('scrooloose/syntastic')
+  call dein#add('mattn/emmet-vim')
+  call dein#add('fatih/vim-go')
+
+  " You can specify revision/branch/tag.
+  call dein#add('Shougo/vimshell', { 'rev': '3787e5' })
+
+  " emmet-vim ---------------------------
+  let g:user_emmet_leader_key='<c-e>'
+  let g:user_emmet_settings = {
+  	\		'variables': {
+  	\      'lang': "ja"
+  	\    },
+  	\   'indentation': '  '
+  	\ }
+  " -------------------------------------
+  " Required:
+  call dein#end()
+  call dein#save_state()
 endif
-" originalrepos on github
-NeoBundle 'Shougo/neobundle.vim'
-NeoBundle 'Shougo/vimproc'
-NeoBundle 'VimClojure'
-NeoBundle 'Shougo/vimshell'
-NeoBundle 'Shougo/unite.vim'
-NeoBundle 'Shougo/neocomplcache'
-NeoBundle 'Shougo/neosnippet'
-NeoBundle 'Shougo/neosnippet-snippets'
-NeoBundle 'Shougo/vimfiler'
-NeoBundle 'Shougo/unite-outline'
-NeoBundle 'majutsushi/tagbar'
-NeoBundle 'dgryski/vim-godef'
-NeoBundle 'jpalardy/vim-slime'
-NeoBundle 'scrooloose/syntastic'
-NeoBundle 'mattn/emmet-vim'
-""NeoBundle 'https://bitbucket.org/kovisoft/slimv'
 
-" emmet-vim ---------------------------
-let g:user_emmet_leader_key='<c-e>'
-let g:user_emmet_settings = {
-	\		'variables': {
-	\      'lang': "ja"
-	\    },
-	\   'indentation': '  '
-	\ }
-" -------------------------------------
-filetype plugin indent on     " required!
-filetype indent on
-syntax on
-NeoBundleCheck
-" }}}
+" Required:
+filetype plugin indent on
+syntax enable
+
+" If you want to install not installed plugins on startup.
+if dein#check_install()
+  call dein#install()
+endif
+
+"End dein Scripts-------------------------
 
 " for golang {{{
 set path+=$GOPATH/src/**
-let g:gofmt_command = 'goimports'
-au BufWritePre *.go Fmt
 au BufNewFile,BufRead *.go set sw=4 noexpandtab ts=4 completeopt=menu,preview
 au FileType go compiler go
 " }}}
@@ -108,7 +107,7 @@ endfunction
 
 autocmd! FileType vimfiler call g:my_vimfiler_settings()
 
-function! g:my_vimfiler_settings()
+function! s:my_vimfiler_settings()
 	nmap     <buffer><expr><CR> vimfiler#smart_cursor_map("\<Plug>(vimfiler_expand_tree)", "\<Plug>(vimfiler_edit_file)")
 	nnoremap <buffer>s          :call vimfiler#mappings#do_action('my_split')<CR>
 	nnoremap <buffer>v          :call vimfiler#mappings#do_action('my_vsplit')<CR>
@@ -120,7 +119,7 @@ function! my_action.func(candidates)
 	exec 'split '. a:candidates[0].action__path
 endfunction
 
-call unite#custom_action('file', 'my_split', my_action)
+" call unite#custom_action('file', 'my_split', my_action)
 
 let my_action = {'is_selectable' : 1}
 
@@ -128,7 +127,7 @@ function! my_action.func(candidates)
 	wincmd p
 	exec 'vsplit '. a:candidates[0].action__path
 endfunction
-call unite#custom_action('file', 'my_vsplit', my_action)
+" call unite#custom_action('file', 'my_vsplit', my_action)
 
 if has("mouse")
 	set mouse=a
