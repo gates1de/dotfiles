@@ -144,6 +144,9 @@ alias lumen='~/.composer/vendor/bin/lumen'
 # docker用エイリアス
 alias docmac='docker-machine'
 
+# adb
+alias adb="$HOME/Library/Android/sdk/platform-tools/adb"
+
 # C で標準出力をクリップボードにコピーする
 # mollifier delta blog : http://mollifier.hatenablog.com/entry/20100317/p1
 if which pbcopy >/dev/null 2>&1 ; then

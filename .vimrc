@@ -132,3 +132,5 @@ endfunction
 if has("mouse")
 	set mouse=a
 endif
+
+:au BufNewFile,BufRead *.sh set softtabstop=4 shiftwidth=4
