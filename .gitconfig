@@ -1,0 +1,10 @@
+[alias]
+	co = checkout
+	graph = log --graph --date=short --pretty=\"format:%C(yellow)%h %C(cyan)%ad %C(green)%an%Creset%x09%s %C(red)%d%Creset\"
+  st = status
+[push]
+	default = matching
+[core]
+	editor = vim
+[user]
+	email = g031i043@gmail.com
