@@ -9,7 +9,7 @@ export LANG=ja_JP.UTF-8
 
 ########################################
 # vim 風キーバインドにする
-bindkey -v
+# bindkey -v
 
 
 ########################################
@@ -174,13 +174,17 @@ case ${OSTYPE} in
 	;;
 esac
 
-if [[ -s ~/.nvm/nvm.sh ]];
-	then source ~/.nvm/nvm.sh
-fi
-
+# tmux 設定
+alias tmux="TERM=screen-256color-bce tmux"
 
 ########################################
 # パス設定
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+
 export PATH=/usr/local/bin:$PATH
 export PATH=/usr/local/sbin:$PATH
 
@@ -206,9 +210,6 @@ eval "$(pyenv init -)"
 # dyld
 export DYLD_LIBRARY_PATH=/opt/intel/composer_xe_2015.3.187/compiler/lib
 
-# The next line updates PATH for the Google Cloud SDK.
-source '/Users/gates1de/google-cloud-sdk/path.zsh.inc'
-
 # gvm
 [[ -s "/Users/gates1de/.gvm/scripts/gvm" ]] && source "/Users/gates1de/.gvm/scripts/gvm"
 
@@ -220,5 +221,15 @@ export SDKMAN_DIR="/Users/gates1de/.sdkman"
 [[ -s "/Users/gates1de/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/gates1de/.sdkman/bin/sdkman-init.sh"
 
 # golang
-export GOPATH=$HOME/go
-export PATH=$GOROOT/bin:$PATH
+export GOPATH="$HOME/go"
+PATH="$GOPATH/bin:$PATH"
+
+# google-cloud-sdk
+export CLOUDSDK_PYTHON="$(which python)"
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/gates1de/google-cloud-sdk/path.zsh.inc' ]; then source '/Users/gates1de/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/gates1de/google-cloud-sdk/completion.zsh.inc' ]; then source '/Users/gates1de/google-cloud-sdk/completion.zsh.inc'; fi
+
+[[ -s "$HOME/.avn/bin/avn.sh" ]] && source "$HOME/.avn/bin/avn.sh" # load avn

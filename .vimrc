@@ -61,7 +61,7 @@ if dein#load_state('/Users/gates1de/.vim/dein/.')
   call dein#add('majutsushi/tagbar')
   call dein#add('scrooloose/syntastic')
   call dein#add('mattn/emmet-vim')
-  call dein#add('fatih/vim-go')
+  " call dein#add('fatih/vim-go')
 
   " You can specify revision/branch/tag.
   call dein#add('Shougo/vimshell', { 'rev': '3787e5' })

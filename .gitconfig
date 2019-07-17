@@ -6,5 +6,9 @@
 	default = matching
 [core]
 	editor = vim
+	excludesfile = /Users/gates1de/.gitignore_global
 [user]
 	email = g031i043@gmail.com
+	name = gates1de
+[commit]
+	template = /Users/gates1de/.commit_template
