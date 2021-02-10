@@ -29,9 +29,7 @@ set expandtab
 
 filetype plugin indent on
 
-:let g:closetag_html_style=1
-:source ~/.vim/scripts/closetag.vim
-
+let g:closetag_filenames = '*.html,*.vue,*.js'
 let s:vim_home=expand('~/.vim')
 
 "dein Scripts-----------------------------
@@ -40,15 +38,15 @@ if &compatible
 endif
 
 " Required:
-set runtimepath+=/Users/gates1de/.vim/dein/./repos/github.com/Shougo/dein.vim
+set runtimepath+=~/.cache/dein/repos/github.com/Shougo/dein.vim
 
 " Required:
-if dein#load_state('/Users/gates1de/.vim/dein/.')
-  call dein#begin('/Users/gates1de/.vim/dein/.')
+if dein#load_state('~/.cache/dein')
+  call dein#begin('~/.cache/dein')
 
   " Let dein manage dein
   " Required:
-  call dein#add('/Users/gates1de/.vim/dein/./repos/github.com/Shougo/dein.vim')
+  call dein#add('~/.cache/dein/repos/github.com/Shougo/dein.vim')
 
   " Add or remove your plugins here:
   call dein#add('Shougo/neosnippet.vim')
@@ -61,6 +59,7 @@ if dein#load_state('/Users/gates1de/.vim/dein/.')
   call dein#add('majutsushi/tagbar')
   call dein#add('scrooloose/syntastic')
   call dein#add('mattn/emmet-vim')
+  call dein#add('alvan/vim-closetag')
   " call dein#add('fatih/vim-go')
 
   " You can specify revision/branch/tag.

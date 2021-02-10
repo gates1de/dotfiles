@@ -2,6 +2,7 @@
 	co = checkout
 	graph = log --graph --date=short --pretty=\"format:%C(yellow)%h %C(cyan)%ad %C(green)%an%Creset%x09%s %C(red)%d%Creset\"
   st = status
+  sw = switch
 [push]
 	default = matching
 [core]
@@ -12,3 +13,5 @@
 	name = gates1de
 [commit]
 	template = /Users/gates1de/.commit_template
+[init]
+	defaultBranch = main

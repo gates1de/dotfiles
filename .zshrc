@@ -45,7 +45,9 @@ autoload -Uz compinit
 compinit
 
 # 補完で小文字でも大文字にマッチさせる
-zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+# zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+zstyle ':completion:*' matcher-list '' 'm:{[:lower:]}={[:upper:]}' '+m:{[:upper:]}={[:lower:]}'
+
 
 # ../ の後は今いるディレクトリを補完しない
 zstyle ':completion:*' ignore-parents parent pwd ..
@@ -180,9 +182,33 @@ alias tmux="TERM=screen-256color-bce tmux"
 ########################################
 # パス設定
 
+# nvm
 export NVM_DIR="$HOME/.nvm"
+export NVM_SYMLINK_CURRENT=true
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# place this after nvm initialization!
+autoload -U add-zsh-hook
+load-nvmrc() {
+  local node_version="$(nvm version)"
+  local nvmrc_path="$(nvm_find_nvmrc)"
+
+  if [ -n "$nvmrc_path" ]; then
+    local nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
+
+    if [ "$nvmrc_node_version" = "N/A" ]; then
+      nvm install
+    elif [ "$nvmrc_node_version" != "$node_version" ]; then
+      nvm use
+    fi
+  elif [ "$node_version" != "$(nvm version default)" ]; then
+    echo "Reverting to nvm default version"
+    nvm use default
+  fi
+}
+add-zsh-hook chpwd load-nvmrc
+load-nvmrc
 
 
 export PATH=/usr/local/bin:$PATH
@@ -207,6 +233,9 @@ export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 
+# pipenv
+export PIPENV_VENV_IN_PROJECT=true
+
 # dyld
 export DYLD_LIBRARY_PATH=/opt/intel/composer_xe_2015.3.187/compiler/lib
 
@@ -217,8 +246,8 @@ export DYLD_LIBRARY_PATH=/opt/intel/composer_xe_2015.3.187/compiler/lib
 export PATH=$PATH:./node_modules/.bin
 
 # sdkman
-export SDKMAN_DIR="/Users/gates1de/.sdkman"
-[[ -s "/Users/gates1de/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/gates1de/.sdkman/bin/sdkman-init.sh"
+# export SDKMAN_DIR="/Users/gates1de/.sdkman"
+# [[ -s "/Users/gates1de/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/gates1de/.sdkman/bin/sdkman-init.sh"
 
 # golang
 export GOPATH="$HOME/go"
@@ -226,10 +255,10 @@ PATH="$GOPATH/bin:$PATH"
 
 # google-cloud-sdk
 export CLOUDSDK_PYTHON="$(which python)"
+# [[ -s "$HOME/.avn/bin/avn.sh" ]] && source "$HOME/.avn/bin/avn.sh" # load avn
+
 # The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/gates1de/google-cloud-sdk/path.zsh.inc' ]; then source '/Users/gates1de/google-cloud-sdk/path.zsh.inc'; fi
+if [ -f '/Users/gates1de/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/gates1de/google-cloud-sdk/path.zsh.inc'; fi
 
 # The next line enables shell command completion for gcloud.
-if [ -f '/Users/gates1de/google-cloud-sdk/completion.zsh.inc' ]; then source '/Users/gates1de/google-cloud-sdk/completion.zsh.inc'; fi
-
-[[ -s "$HOME/.avn/bin/avn.sh" ]] && source "$HOME/.avn/bin/avn.sh" # load avn
+if [ -f '/Users/gates1de/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/gates1de/google-cloud-sdk/completion.zsh.inc'; fi
